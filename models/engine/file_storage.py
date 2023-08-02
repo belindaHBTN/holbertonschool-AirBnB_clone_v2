@@ -57,3 +57,8 @@ class FileStorage:
         therefore, to access obj: __objects[key]
         and then delete obj
  """
+        if obj is None:
+            return
+        for key, value in FileStorage.__objects.items():
+            if FileStorage.__objects[key] == obj:
+                del FileStorage.__objects[key]
