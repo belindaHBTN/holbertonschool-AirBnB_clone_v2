@@ -34,7 +34,8 @@ class BaseModel:
                 if key in attributes_ignore_list:
                     continue
                 elif key in attribute_datetime_list:
-                    setattr(self, key, datetime.strptime(value, time_format)
+                    v = datetime.strptime(v, time_format)
+                    setattr(self, key, v)
                 else:
                     setattr(self, key, value)
 
