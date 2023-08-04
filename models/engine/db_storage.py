@@ -44,6 +44,7 @@ class DBStorage():
             class_name = obj["__class__"]
             obj_id = obj["id"]
             key = class_name + "." + obj_id
+            print(key)
             temp_dict[key] = obj
         return temp_dict
 
