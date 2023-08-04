@@ -18,5 +18,5 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
 
-    user = relationship("User")
-    cities = relationship("City")
+#    user = relationship("User")
+#    cities = relationship("City")
