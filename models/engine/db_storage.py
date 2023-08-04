@@ -10,29 +10,31 @@ class DBStorage():
     __engine = None
     __session = None
 
-    def__init__(self):
+    def __init__(self):
         """Start link class to table in database"""
-        os.environ["HBNB_MYSQL_USER"] = hbnb_dev
-        os.environ["HBNB_MYSQL_PWD"] = hbnb_dev_pwd
-        os.environ["HBNB_MYSQL_HOST"] = localhost
-        os.environ["HBNB_MYSQL_DB"] = hbnb_dev_db
-        os.environ["HBNB_ENV"] = dev
-
-        username = os.environ.get("HBNB_MYSQL_USER")
-        password = os.environ.get("HBNB_MYSQL_PWD")
-        hostname = os.environ.get("HBNB_MYSQL_HOST")
-        database = os.environ.get("HBNB_MYSQL_DB")
+        username = os.getenv("HBNB_MYSQL_USER", default=None)
+        password = os.getenv("HBNB_MYSQL_PWD", default=None)
+        hostname = os.getenv("HBNB_MYSQL_HOST", default=None)
+        database = os.getenv("HBNB_MYSQL_DB", default=None)
+        env = os.getenv("HBNB_ENV", default=None)
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'\
                 .format(username, password, hostname, database), pool_pre_ping=True)
-        #        Base.metadata.create_all(engine)
+
+        if env == "test":
+            Base.metadata.drop_all(self.__engine)
 
     def all(self,cls=None):
         Session = sessionmaker(bind=engine)
         self.__session = Session(cls)
         if cls is None:
-            classes = []
-        
+            query = self.__session.query(User, State, City, Amenity, Review).all()
         else:
-            for instance in session.query(State).order_by(State.id):
-                return 
+            query = self.__session.query(cls).all()
+        temp_dict = {}
+        for obj in query:
+            class_name = obj."__class__"
+            obj_id = obj."id"
+            key = class_name + "." + obj_id
+            temp_dict[key] = obj
+        return temp_dict
