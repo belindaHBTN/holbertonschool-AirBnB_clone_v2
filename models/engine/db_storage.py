@@ -38,18 +38,16 @@ class DBStorage():
         else:
             classes = [cls]
 
-        temp_dict = {}
+        obj_dict = {}
         for cls in classes:
             query = self.__session.query(cls).all()
-            return query
             for obj in query:
-                print(obj)
-                class_name = type(obj).__name__
+                class_name = obj.__class__.__name__
                 obj_id = obj.id
                 key = f"{class_name}.{obj_id}"
-                temp_dict[key] = obj
+                obj_dict[key] = obj
 
-        return temp_dict
+        return obj_dict
 
 
     def new(self, obj):
