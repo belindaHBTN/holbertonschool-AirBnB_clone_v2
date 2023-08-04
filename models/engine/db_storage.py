@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ Use sqlAlchemy to declare a database storage"""
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
+from models.base_model import Base
 import os
 from models.user import User
 from models.state import State
@@ -40,8 +41,8 @@ class DBStorage():
             query = self.__session.query(cls).all()
         temp_dict = {}
         for obj in query:
-            class_name = obj."__class__"
-            obj_id = obj."id"
+            class_name = obj["__class__"]
+            obj_id = obj["id"]
             key = class_name + "." + obj_id
             temp_dict[key] = obj
         return temp_dict
