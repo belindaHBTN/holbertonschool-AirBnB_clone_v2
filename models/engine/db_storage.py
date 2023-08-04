@@ -33,19 +33,22 @@ class DBStorage():
 
     def all(self,cls=None):
         """Return a dictionary of models currently in database"""
-#        Session = sessionmaker(bind=self.__engine)
-#        self.__session = Session(cls)
         if cls is None:
-            query = self.__session.query(User, State, City, Place, Amenity, Review).all()
+            classes = [User, State, City, Place, Amenity, Review]
         else:
-            query = self.__session.query(cls).all()
+            classes = [cls]
+
         temp_dict = {}
-        for obj in query:
-            class_name = obj["__class__"]
-            obj_id = obj["id"]
-            key = class_name + "." + obj_id
-            print(key)
-            temp_dict[key] = obj
+        for cls in classes:
+            query = self.__session.query(cls).all()
+            return query
+            for obj in query:
+                print(obj)
+                class_name = type(obj).__name__
+                obj_id = obj.id
+                key = f"{class_name}.{obj_id}"
+                temp_dict[key] = obj
+
         return temp_dict
 
 
