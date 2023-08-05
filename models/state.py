@@ -25,5 +25,7 @@ class State(BaseModel, Base):
                     temp_list[key] = val
             return temp_list
     else:
-        cities = relationship("City", back_populates="state",\
+        cities = relationship(
+                "City",
+                back_populates="state",
                 cascade="all, delete, delete-orphan")

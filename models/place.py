@@ -9,9 +9,16 @@ from os import getenv
 place_amenity = Table(
     "place_amenity",
     Base.metadata,
-    Column("place_id", String(60), ForeignKey("places.id"), primary_key=True,
+    Column(
+        "place_id",
+        String(60),
+        ForeignKey("places.id"),
+        primary_key=True,
         nullable=False),
-    Column("amenity_id", String(60), ForeignKey("amenities.id"),
+    Column(
+        "amenity_id",
+        String(60),
+        ForeignKey("amenities.id"),
         primary_key=True, nullable=False)
 )
 
@@ -61,7 +68,9 @@ class Place(BaseModel, Base):
                 self.amenity_ids.append(value.id)
 
     else:
-        reviews = relationship("Review", back_populates='place',
+        reviews = relationship(
+                "Review",
+                back_populates='place',
                 cascade="all, delete, delete-orphan")
 
         user = relationship("User", back_populates="places")
