@@ -12,5 +12,5 @@ class User(BaseModel, Base):
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
 
-    places = relationship('Place', back_populates='user',
-                          cascade='all, delete, delete-orphan')
+#    places = relationship('Place', back_populates='user',
+#                          cascade='all, delete, delete-orphan')
