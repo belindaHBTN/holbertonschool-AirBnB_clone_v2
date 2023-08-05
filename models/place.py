@@ -1,14 +1,24 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
+
+"""Build a many to many relationship between place and amenity"""
+place_amenity = Table(
+    "place_amenity",
+    Base.metadata,
+    Column("place_id", String(60), ForeignKey("places.id"), primary_key=True,
+        nullable=False),
+    Column("amenity_id", String(60), ForeignKey("amenities.id"),
+        primary_key=True, nullable=False)
+)
 
 
 class Place(BaseModel, Base):
     """ A place to stay """
-
     __tablename__ = 'places'
+
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -26,6 +36,11 @@ class Place(BaseModel, Base):
     user = relationship("User", back_populates="places")
     cities = relationship("City", back_populates="places")
 
+    amenities = relationship(
+            "Amenity", secondary="place_amenity", viewonly=False
+    )
+
+
 """
     @property
     def reviews(self):
@@ -37,4 +52,22 @@ class Place(BaseModel, Base):
             if self.id == val.place_id:
                 review_list[key] = val
         return review_list
+"""
+
+"""
+    @property
+    def amenities(self):
+        Return the list of Amenity instances
+        from models import storage
+        amenity_values_list = storage.all(Amenity).values()
+        amenity_list = []
+        for amenity in amenity_values_list:
+            if amenity.id in self.amenity_ids:
+                amenity_list.append(amenity)
+        return amenity_list
+
+    @amenities.setter
+    def amenities(self, value):
+        if type(value) == Amenity:
+            self.amenity_ids.append(value.id)
 """
