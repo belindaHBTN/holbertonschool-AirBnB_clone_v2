@@ -25,13 +25,15 @@ class DBStorage():
         database = os.getenv("HBNB_MYSQL_DB", default=None)
         env = os.getenv("HBNB_ENV", default=None)
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'\
-                .format(username, password, hostname, database), pool_pre_ping=True)
+        self.__engine = create_engine(
+                'mysql+mysqldb://{}:{}@{}/{}'.format(
+                    username, password, hostname, database),
+                pool_pre_ping=True)
 
         if env == "test":
             Base.metadata.drop_all(self.__engine)
 
-    def all(self,cls=None):
+    def all(self, cls=None):
         """Return a dictionary of models currently in database"""
         if cls is None:
             classes = [User, State, City, Place, Amenity, Review]
@@ -49,7 +51,6 @@ class DBStorage():
 
         return obj_dict
 
-
     def new(self, obj):
         """Add the object to the current database session"""
         self.__session.add(obj)
@@ -66,6 +67,7 @@ class DBStorage():
     def reload(self):
         """"""
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(
+                bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
