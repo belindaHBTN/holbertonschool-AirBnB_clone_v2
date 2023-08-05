@@ -26,9 +26,10 @@ class Place(BaseModel, Base):
     user = relationship("User", back_populates="places")
     cities = relationship("City", back_populates="places")
 
+"""
     @property
     def reviews(self):
-        """return the list of Review instances that belong to the place"""
+        return the list of Review instances that belong to the place
         from models import storage
         review_dict = storage.all(Review)
         review_list = []
@@ -36,3 +37,4 @@ class Place(BaseModel, Base):
             if self.id == val.place_id:
                 review_list[key] = val
         return review_list
+"""

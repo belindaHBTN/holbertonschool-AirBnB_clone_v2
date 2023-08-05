@@ -14,9 +14,10 @@ class State(BaseModel, Base):
     cities = relationship(
         "City", back_populates="state", cascade="all, delete, delete-orphan")
 
+"""
     @property
     def cities(self):
-        """returns the list of City instances that belong to the state"""
+        returns the list of City instances that belong to the state
         from models import storage
         cities_dict = storage.all(City)
         temp_list = []
@@ -24,3 +25,4 @@ class State(BaseModel, Base):
             if self.id == val.state_id:
                 temp_list[key] = val
         return temp_list
+"""
