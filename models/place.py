@@ -20,8 +20,11 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
 
-    reviews = relationship("Review", back_populates='place', cascade="all,
-            delete, delete-orphan")
+    reviews = relationship("Review", back_populates='place',
+            cascade="all, delete, delete-orphan")
+
+    user = relationship("User", back_populates="places")
+    cities = relationship("City", back_populates="places")
 
     @property
     def reviews(self):
