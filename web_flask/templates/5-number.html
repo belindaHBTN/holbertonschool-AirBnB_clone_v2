@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<HTML lang="en">
+{% if n %}
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>Number: {{ n }}</H1>
+    </BODY>
+{% else %}
+    <HEAD>
+        <TITLE>404 Not Found</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>Not Found</H1>
+        <P>The requested URL was not found on the server.
+        If you entered the URL manually please check your
+        spelling and try again.</P>
+    </BODY>
+{% endif %}
+</HTML>
