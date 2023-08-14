@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<HTML lang="en">
+{% if n %}
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+    {% if n%2==0 %}
+        <H1>Number: {{ n }} is even</H1>
+    {% else %}
+        <H1>Number: {{ n }} is odd</H1>
+    {% endif %}
+    </BODY>
+{% else %}
+    <HEAD>
+        <TITLE>404 Not Found</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>Not Found</H1>
+        <P>The requested URL was not found on the server.
+        If you entered the URL manually please check your
+        spelling and try again.</P>
+    </BODY>
+{% endif %}
+</HTML>
