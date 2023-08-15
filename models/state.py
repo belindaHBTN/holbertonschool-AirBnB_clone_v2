@@ -19,11 +19,11 @@ class State(BaseModel, Base):
             """returns the list of City instances that belong to the state"""
             from models import storage
             cities_dict = storage.all(City)
-            temp_list = []
-            for key, val in cities_dict.items():
+            city_list = []
+            for val in cities_dict.values():
                 if self.id == val.state_id:
-                    temp_list[key] = val
-            return temp_list
+                    city_list.append(val)
+            return city_list
     else:
         cities = relationship(
                 "City",
